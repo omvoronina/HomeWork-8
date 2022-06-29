@@ -1,0 +1,28 @@
+# 1. Определение количества различных подстрок с использованием хэш-функции.
+# Пусть дана строка S длиной N, состоящая только из маленьких латинских букв.
+# Требуется найти количество различных подстрок в этой строке.
+
+import hashlib
+
+
+s = 'work'
+n = len(s)
+list = []
+
+def hash(part):
+    return str(hashlib.sha1(part.encode()).hexdigest())
+
+def func(s):
+    for i in range(0, n):
+        list.append(s[i : n])
+        list.append(s[0 : n - i])
+    return list
+
+# print(func(s))
+res = []
+res_hash = []
+for j in range(0, n):
+    res.extend(func(s[j: n]))
+    res_hash.append(hash(str(func(s[j: n]))))
+
+print(len(set([i for i in res if i != ''])))
